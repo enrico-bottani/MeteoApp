@@ -37,19 +37,18 @@ public class ListFragment extends Fragment {
         startLocationListener();
     }
 
+    public void updateAdapter() {
+        mAdapter.notifyDataSetChanged();
+    }
+
     private void startLocationListener() {
         LocationParams.Builder builder = new LocationParams.Builder()
                 .setAccuracy(LocationAccuracy.HIGH)
                 .setDistance(0)
                 .setInterval(5000); // 5 sec
+        LocationsHolder.get(this.getActivity()).addListener(this);
         SmartLocation.with(this.getActivity()).location().continuous().config(builder.build())
-                .start(new OnLocationUpdatedListener() {
-                    @Override
-                    public void onLocationUpdated(android.location.Location location) {
-                        mAdapter.updateFirstLocation(new Location(location));
-                        mAdapter.notifyDataSetChanged();
-                    }
-                });
+                .start(LocationsHolder.get(this.getActivity()));
     }
 
 
@@ -138,8 +137,5 @@ public class ListFragment extends Fragment {
             return mLocations.size();
         }
 
-        public void updateFirstLocation(Location location) {
-            mLocations.set(0, location);
-        }
     }
 }

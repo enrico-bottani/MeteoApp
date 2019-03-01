@@ -13,6 +13,10 @@ public class Location {
     private String mName;
     private android.location.Location location;
 
+    public Location(String name) {
+        mName = name;
+    }
+
     public UUID getId() {
         return Id;
     }
@@ -33,7 +37,7 @@ public class Location {
         Id = UUID.randomUUID();
         Geocoder geocoder = new Geocoder(MainActivity.instance, Locale.ITALIAN);
         try {
-            mName = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1).get(0).getCountryName();
+            mName = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1).get(0).getLocality();
         } catch (IOException e) {
             e.printStackTrace();
         }

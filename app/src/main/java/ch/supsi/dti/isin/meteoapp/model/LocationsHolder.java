@@ -6,10 +6,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class LocationsHolder {
+import ch.supsi.dti.isin.meteoapp.activities.MainActivity;
+import ch.supsi.dti.isin.meteoapp.fragments.ListFragment;
+import io.nlopez.smartlocation.OnLocationUpdatedListener;
+
+public class LocationsHolder implements OnLocationUpdatedListener {
 
     private static LocationsHolder sLocationsHolder;
     private List<Location> mLocations;
+    private List<ListFragment> listFragment;
 
     public static LocationsHolder get(Context context) {
         if (sLocationsHolder == null)
@@ -20,11 +25,12 @@ public class LocationsHolder {
 
     private LocationsHolder(Context context) {
         mLocations = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
-            Location location = new Location();
-            location.setName("Location # " + i);
+        mLocations.add(new Location("Getting GPS location"));
+        for (int i = 1; i < 10; i++) {
+            Location location = new Location("Location # " + i);
             mLocations.add(location);
         }
+        listFragment = new ArrayList<>();
     }
 
     public List<Location> getLocations() {
@@ -38,5 +44,15 @@ public class LocationsHolder {
         }
 
         return null;
+    }
+
+    @Override
+    public void onLocationUpdated(android.location.Location location) {
+        mLocations.set(0, new Location(location));
+        for (ListFragment listFragment : listFragment) listFragment.updateAdapter();
+    }
+
+    public void addListener(ListFragment listFragment) {
+        this.listFragment.add(listFragment);
     }
 }
