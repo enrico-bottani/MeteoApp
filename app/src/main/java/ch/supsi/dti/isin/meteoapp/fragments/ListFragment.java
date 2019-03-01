@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -20,6 +21,10 @@ import ch.supsi.dti.isin.meteoapp.R;
 import ch.supsi.dti.isin.meteoapp.activities.DetailActivity;
 import ch.supsi.dti.isin.meteoapp.model.LocationsHolder;
 import ch.supsi.dti.isin.meteoapp.model.Location;
+import io.nlopez.smartlocation.OnLocationUpdatedListener;
+import io.nlopez.smartlocation.SmartLocation;
+import io.nlopez.smartlocation.location.config.LocationAccuracy;
+import io.nlopez.smartlocation.location.config.LocationParams;
 
 public class ListFragment extends Fragment {
     private RecyclerView mLocationRecyclerView;
@@ -29,6 +34,22 @@ public class ListFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+        startLocationListener();
+    }
+
+    private void startLocationListener() {
+        LocationParams.Builder builder = new LocationParams.Builder()
+                .setAccuracy(LocationAccuracy.HIGH)
+                .setDistance(0)
+                .setInterval(5000); // 5 sec
+        SmartLocation.with(this.getActivity()).location().continuous().config(builder.build())
+                .start(new OnLocationUpdatedListener() {
+                    @Override
+                    public void onLocationUpdated(android.location.Location location) {
+                        mAdapter.updateFirstLocation(new Location(location));
+                        mAdapter.notifyDataSetChanged();
+                    }
+                });
     }
 
 
@@ -115,6 +136,10 @@ public class ListFragment extends Fragment {
         @Override
         public int getItemCount() {
             return mLocations.size();
+        }
+
+        public void updateFirstLocation(Location location) {
+            mLocations.set(0, location);
         }
     }
 }
