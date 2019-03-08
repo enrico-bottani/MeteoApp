@@ -19,7 +19,6 @@ public class LocationsHolder implements OnLocationUpdatedListener {
     public static LocationsHolder get(Context context) {
         if (sLocationsHolder == null)
             sLocationsHolder = new LocationsHolder(context);
-
         return sLocationsHolder;
     }
 

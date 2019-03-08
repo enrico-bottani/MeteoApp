@@ -29,10 +29,6 @@ public class Location {
         return mName;
     }
 
-    public void setName(String name) {
-        mName = name;
-    }
-
     public Location(android.location.Location location) {
         Id = UUID.randomUUID();
         Geocoder geocoder = new Geocoder(MainActivity.instance, Locale.ITALIAN);
@@ -42,10 +38,6 @@ public class Location {
             e.printStackTrace();
         }
         this.location = location;
-    }
-
-    public Location() {
-        Id = UUID.randomUUID();
     }
 
     public android.location.Location getActualLocation() {
