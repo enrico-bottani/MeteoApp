@@ -1,4 +1,4 @@
-package ch.supsi.dti.isin.meteoapp.model;
+package ch.supsi.dti.isin.meteoapp.database;
 
 public class Schema {
     public static final class Location{

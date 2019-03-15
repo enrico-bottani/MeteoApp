@@ -19,6 +19,7 @@ import java.util.List;
 
 import ch.supsi.dti.isin.meteoapp.R;
 import ch.supsi.dti.isin.meteoapp.activities.DetailActivity;
+import ch.supsi.dti.isin.meteoapp.activities.SingleFragmentActivity;
 import ch.supsi.dti.isin.meteoapp.model.LocationsHolder;
 import ch.supsi.dti.isin.meteoapp.model.Location;
 import io.nlopez.smartlocation.OnLocationUpdatedListener;

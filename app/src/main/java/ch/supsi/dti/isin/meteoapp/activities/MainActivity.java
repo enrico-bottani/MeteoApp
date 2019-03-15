@@ -2,12 +2,10 @@ package ch.supsi.dti.isin.meteoapp.activities;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
-import android.location.Geocoder;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 
-import java.util.Locale;
 
 import ch.supsi.dti.isin.meteoapp.fragments.ListFragment;
 
