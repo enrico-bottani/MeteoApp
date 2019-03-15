@@ -1,8 +1,14 @@
 package ch.supsi.dti.isin.meteoapp.fragments;
 
+import android.app.Activity;
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -77,13 +83,27 @@ public class ListFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_add:
-                Toast toast = Toast.makeText(getActivity(),
-                        "Add a location",
-                        Toast.LENGTH_SHORT);
-                toast.show();
+                FragmentManager manager = getFragmentManager();
+                LocationPickerFragment dialog = new LocationPickerFragment();
+
+
+                dialog.setTargetFragment(this, 0);
+                if (manager == null) return super.onOptionsItemSelected(item);
+                dialog.show(manager, "TestDialog");
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == Activity.RESULT_OK) {
+            String location = (String) data.getSerializableExtra("place");
+            Toast.makeText(this.getActivity(), location, Toast.LENGTH_SHORT).show();
+        }
+        else if (resultCode == Activity.RESULT_CANCELED) {
+            Toast.makeText(this.getActivity(), "CANCELED", Toast.LENGTH_SHORT).show();
         }
     }
 
