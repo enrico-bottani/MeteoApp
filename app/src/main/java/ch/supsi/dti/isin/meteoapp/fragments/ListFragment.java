@@ -100,6 +100,7 @@ public class ListFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == Activity.RESULT_OK) {
             String location = (String) data.getSerializableExtra("place");
+            LocationsHolder.get(this.getActivity()).addLocation(location);
             Toast.makeText(this.getActivity(), location, Toast.LENGTH_SHORT).show();
         }
         else if (resultCode == Activity.RESULT_CANCELED) {

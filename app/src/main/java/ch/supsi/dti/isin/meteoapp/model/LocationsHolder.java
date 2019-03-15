@@ -25,10 +25,6 @@ public class LocationsHolder implements OnLocationUpdatedListener {
     private LocationsHolder(Context context) {
         mLocations = new ArrayList<>();
         mLocations.add(new Location("Getting GPS location"));
-        for (int i = 1; i < 10; i++) {
-            Location location = new Location("Location # " + i);
-            mLocations.add(location);
-        }
         listFragment = new ArrayList<>();
     }
 
@@ -43,6 +39,10 @@ public class LocationsHolder implements OnLocationUpdatedListener {
         }
 
         return null;
+    }
+
+    public void addLocation(String location) {
+        mLocations.add(new Location(location));
     }
 
     @Override
