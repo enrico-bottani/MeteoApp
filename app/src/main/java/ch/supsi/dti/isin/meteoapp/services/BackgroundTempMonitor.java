@@ -64,7 +64,6 @@ public class BackgroundTempMonitor extends IntentService {
         }
 
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this, "default")
-                .setSmallIcon(android.R.drawable.ic_menu_report_image)
                 .setContentTitle(isCold ? "Brr... " : "Muy caliente!")
                 .setContentText("Warning! Temperature " + (isCold ? "below " : "over ") + degrees+" degrees")
                 .setSmallIcon(isCold ? R.drawable.ic_cold : R.drawable.hot_sun)
