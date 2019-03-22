@@ -6,6 +6,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import ch.supsi.dti.isin.meteoapp.model.Location;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
@@ -44,10 +47,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.insert(Schema.Location.NAME, null, values);
     }
 
-    public void selectLocation(String name){
+    public List<Location> selectLocation(){
         SQLiteDatabase db = this.getReadableDatabase();
+        List<Location> locations=new ArrayList<>();
         //Cursor c = db.query(Schema.Location.NAME, null, null, null, null, null, null);
-        String query="SELECT * FROM "+Schema.Location.NAME+" WHERE "+Schema.Location.Columns.NAME+" LIKE "+name+";";
+        String query="SELECT * FROM "+Schema.Location.NAME+";";
         Cursor c = db.rawQuery(query,null);
         LocationCursor cursor = new LocationCursor(c);
         try {
@@ -56,9 +60,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 Location entry = cursor.getEntry();
 
                 System.out.println(entry.getName());
+                locations.add(entry);
 
                 cursor.moveToNext();
             }
+
+            return locations;
         } finally {
             cursor.close();
         }

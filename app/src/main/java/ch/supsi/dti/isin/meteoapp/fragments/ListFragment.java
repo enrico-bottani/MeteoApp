@@ -28,7 +28,6 @@ import ch.supsi.dti.isin.meteoapp.activities.DetailActivity;
 import ch.supsi.dti.isin.meteoapp.activities.SingleFragmentActivity;
 import ch.supsi.dti.isin.meteoapp.model.LocationsHolder;
 import ch.supsi.dti.isin.meteoapp.model.Location;
-import io.nlopez.smartlocation.OnLocationUpdatedListener;
 import io.nlopez.smartlocation.SmartLocation;
 import io.nlopez.smartlocation.location.config.LocationAccuracy;
 import io.nlopez.smartlocation.location.config.LocationParams;
@@ -66,6 +65,13 @@ public class ListFragment extends Fragment {
         mLocationRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         List<Location> locations = LocationsHolder.get(getActivity()).getLocations();
+
+        // load from the database the already saved places
+        List<Location> fromDatabaseLocation = SingleFragmentActivity.helper.selectLocation();
+        for(Location loc:fromDatabaseLocation){
+            LocationsHolder.get(getActivity()).getLocations().add(loc);
+        }
+
         mAdapter = new LocationAdapter(locations);
         mLocationRecyclerView.setAdapter(mAdapter);
 
