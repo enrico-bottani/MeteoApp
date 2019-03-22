@@ -28,6 +28,7 @@ import ch.supsi.dti.isin.meteoapp.activities.DetailActivity;
 import ch.supsi.dti.isin.meteoapp.activities.SingleFragmentActivity;
 import ch.supsi.dti.isin.meteoapp.model.LocationsHolder;
 import ch.supsi.dti.isin.meteoapp.model.Location;
+import ch.supsi.dti.isin.meteoapp.services.BackgroundTempMonitor;
 import io.nlopez.smartlocation.OnLocationUpdatedListener;
 import io.nlopez.smartlocation.SmartLocation;
 import io.nlopez.smartlocation.location.config.LocationAccuracy;
@@ -41,6 +42,7 @@ public class ListFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+        BackgroundTempMonitor.setBackgroundTempMonitor(this.getContext(), true);
         startLocationListener();
     }
 
@@ -103,8 +105,7 @@ public class ListFragment extends Fragment {
             String location = (String) data.getSerializableExtra("place");
             LocationsHolder.get(this.getActivity()).addLocation(location);
             Toast.makeText(this.getActivity(), location, Toast.LENGTH_SHORT).show();
-        }
-        else if (resultCode == Activity.RESULT_CANCELED) {
+        } else if (resultCode == Activity.RESULT_CANCELED) {
             Toast.makeText(this.getActivity(), "CANCELED", Toast.LENGTH_SHORT).show();
         }
     }
