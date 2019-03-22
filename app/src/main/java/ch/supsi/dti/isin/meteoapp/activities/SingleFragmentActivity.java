@@ -8,8 +8,12 @@ import android.support.v7.app.AppCompatActivity;
 
 import ch.supsi.dti.isin.meteoapp.R;
 import ch.supsi.dti.isin.meteoapp.database.DatabaseHelper;
+import ch.supsi.dti.isin.meteoapp.network.FetchItemsTask;
+import ch.supsi.dti.isin.meteoapp.network.OnTaskCompleted;
+import ch.supsi.dti.isin.meteoapp.network.Weather;
 
-public abstract class SingleFragmentActivity extends AppCompatActivity {
+
+public abstract class SingleFragmentActivity extends AppCompatActivity implements OnTaskCompleted {
 
     SQLiteDatabase db = null;
     public static DatabaseHelper helper = null;
@@ -35,7 +39,13 @@ public abstract class SingleFragmentActivity extends AppCompatActivity {
 
         //helper.insertLocation("FakeLocation");
         //helper.selectLocation("Manno");
+
+
+        //API
+        FetchItemsTask t = new FetchItemsTask(this);
+        t.execute("Bellinzona");
     }
+
 
     @Override
     protected void onStop() {

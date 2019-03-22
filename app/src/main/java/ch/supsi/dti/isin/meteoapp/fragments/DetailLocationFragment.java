@@ -7,17 +7,22 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.List;
 import java.util.UUID;
 
 import ch.supsi.dti.isin.meteoapp.R;
 import ch.supsi.dti.isin.meteoapp.model.LocationsHolder;
 import ch.supsi.dti.isin.meteoapp.model.Location;
 
+
+
+
 public class DetailLocationFragment extends Fragment {
     private static final String ARG_LOCATION_ID = "location_id";
 
     private Location mLocation;
     private TextView mIdTextView;
+    private TextView mtemp;
 
     public static DetailLocationFragment newInstance(UUID locationId) {
         Bundle args = new Bundle();
@@ -41,8 +46,12 @@ public class DetailLocationFragment extends Fragment {
 
         mIdTextView = v.findViewById(R.id.id_textView);
         mIdTextView.setText(mLocation.getName());
+        mtemp=v.findViewById(R.id.textView4);
+
+
 
         return v;
     }
+
 }
 

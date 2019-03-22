@@ -8,6 +8,7 @@ import android.support.v4.content.ContextCompat;
 
 
 import ch.supsi.dti.isin.meteoapp.fragments.ListFragment;
+import ch.supsi.dti.isin.meteoapp.network.Weather;
 
 public class MainActivity extends SingleFragmentActivity {
 
@@ -34,5 +35,10 @@ public class MainActivity extends SingleFragmentActivity {
                 return;
             }
         }
+    }
+
+    @Override
+    public void onTaskCompleted(Weather item) {
+
     }
 }
