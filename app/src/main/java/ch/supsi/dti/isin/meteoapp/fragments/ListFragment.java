@@ -102,6 +102,7 @@ public class ListFragment extends Fragment {
         if (resultCode == Activity.RESULT_OK) {
             String location = (String) data.getSerializableExtra("place");
             LocationsHolder.get(this.getActivity()).addLocation(location);
+            SingleFragmentActivity.helper.insertLocation(location);
             Toast.makeText(this.getActivity(), location, Toast.LENGTH_SHORT).show();
         }
         else if (resultCode == Activity.RESULT_CANCELED) {
