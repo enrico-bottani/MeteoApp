@@ -42,8 +42,8 @@ public abstract class SingleFragmentActivity extends AppCompatActivity implement
 
 
         //API
-        FetchItemsTask t = new FetchItemsTask(this);
-        t.execute("Bellinzona");
+        //FetchItemsTask t = new FetchItemsTask(this);
+       // t.execute("Bellinzona");
     }
 
 

@@ -50,13 +50,22 @@ public class Datafetcher {
     }
 
 
-    public Weather fetchItem(String[] locationName) {
+    public Weather fetchItem(Location locationName) {
         Weather weather=null;
 
         try {
-            String url = Uri.parse("http://api.openweathermap.org/data/2.5/weather?q=" + locationName[0] + "&appid=" + Datafetcher.API_KEY)
-                    .buildUpon()
-                    .build().toString();
+            String url=null;
+            if(locationName.getLon()!=0 && locationName.getLat()!=0){
+                url = Uri.parse("http://api.openweathermap.org/data/2.5/weather?lat=" + locationName.getLat() + "&lon="+locationName.getLon()+"&appid=" + Datafetcher.API_KEY)
+                        .buildUpon()
+                        .build().toString();
+            }
+            else {
+                url = Uri.parse("http://api.openweathermap.org/data/2.5/weather?q=" + locationName.getName() + "&appid=" + Datafetcher.API_KEY)
+                        .buildUpon()
+                        .build().toString();
+            }
+
             String jsonString = new String(getUrlBytes(url));
             Log.i(TAG, "Received JSON: " + jsonString);
             JSONObject jsonBody = new JSONObject(jsonString);
