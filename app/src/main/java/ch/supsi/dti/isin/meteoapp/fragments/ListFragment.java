@@ -66,6 +66,13 @@ public class ListFragment extends Fragment {
         mLocationRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         List<Location> locations = LocationsHolder.get(getActivity()).getLocations();
+
+        // load from the database the already saved places
+        List<Location> fromDatabaseLocation = SingleFragmentActivity.helper.selectLocation();
+        for(Location loc:fromDatabaseLocation){
+            LocationsHolder.get(getActivity()).getLocations().add(loc);
+        }
+
         mAdapter = new LocationAdapter(locations);
         mLocationRecyclerView.setAdapter(mAdapter);
 
@@ -102,6 +109,7 @@ public class ListFragment extends Fragment {
         if (resultCode == Activity.RESULT_OK) {
             String location = (String) data.getSerializableExtra("place");
             LocationsHolder.get(this.getActivity()).addLocation(location);
+            SingleFragmentActivity.helper.insertLocation(location);
             Toast.makeText(this.getActivity(), location, Toast.LENGTH_SHORT).show();
         }
         else if (resultCode == Activity.RESULT_CANCELED) {
@@ -151,6 +159,7 @@ public class ListFragment extends Fragment {
         @Override
         public void onBindViewHolder(LocationHolder holder, int position) {
             Location location = mLocations.get(position);
+            holder.bind(location);
             holder.bind(location);
         }
 
