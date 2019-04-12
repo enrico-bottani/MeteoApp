@@ -10,6 +10,8 @@ import android.widget.TextView;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.List;
 import java.util.UUID;
 
@@ -66,7 +68,10 @@ public class DetailLocationFragment extends Fragment implements OnTaskCompleted 
 
     @Override
     public void onTaskCompleted(Weather item) {
-        meanTemp.setText(item.getMain().getTemp()+" °C");
+        NumberFormat formatter = new DecimalFormat("#0.00");
+        meanTemp.setText(formatter.format(item.getMain().getTemp()-273.15) + " °C");
+        minTemp.setText(formatter.format(item.getMain().getTemp_min()-273.15) + " °C");
+        maxTemp.setText(formatter.format(item.getMain().getTemp_max()-273.15) + " °C");
 
     }
 }
