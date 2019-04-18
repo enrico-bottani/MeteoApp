@@ -5,7 +5,6 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -14,10 +13,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
 
-import ch.supsi.dti.isin.meteoapp.network.Weather;
+import ch.supsi.dti.isin.meteoapp.network.JSONRoot;
 
 import static android.support.constraint.Constraints.TAG;
 
@@ -50,8 +47,8 @@ public class Datafetcher {
     }
 
 
-    public Weather fetchItem(Location locationName) {
-        Weather weather=null;
+    public JSONRoot fetchItem(Location locationName) {
+        JSONRoot weather=null;
 
         try {
             String url=null;
@@ -70,7 +67,7 @@ public class Datafetcher {
             Log.i(TAG, "Received JSON: " + jsonString);
             JSONObject jsonBody = new JSONObject(jsonString);
             Gson gson=new Gson();
-            weather=gson.fromJson(jsonString, Weather.class);
+            weather=gson.fromJson(jsonString, JSONRoot.class);
             Log.d("tag",jsonBody.toString());
             Log.d("tag","temperature: "+weather.getMain().getTemp());
         } catch (IOException ioe) {

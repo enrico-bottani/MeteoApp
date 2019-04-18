@@ -8,9 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 
 import ch.supsi.dti.isin.meteoapp.R;
 import ch.supsi.dti.isin.meteoapp.database.DatabaseHelper;
-import ch.supsi.dti.isin.meteoapp.network.FetchItemsTask;
 import ch.supsi.dti.isin.meteoapp.network.OnTaskCompleted;
-import ch.supsi.dti.isin.meteoapp.network.Weather;
 
 
 public abstract class SingleFragmentActivity extends AppCompatActivity implements OnTaskCompleted {

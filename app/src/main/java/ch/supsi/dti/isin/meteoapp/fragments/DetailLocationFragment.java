@@ -6,13 +6,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
-import java.util.List;
 import java.util.UUID;
 
 import ch.supsi.dti.isin.meteoapp.R;
@@ -20,7 +18,7 @@ import ch.supsi.dti.isin.meteoapp.model.LocationsHolder;
 import ch.supsi.dti.isin.meteoapp.model.Location;
 import ch.supsi.dti.isin.meteoapp.network.FetchItemsTask;
 import ch.supsi.dti.isin.meteoapp.network.OnTaskCompleted;
-import ch.supsi.dti.isin.meteoapp.network.Weather;
+import ch.supsi.dti.isin.meteoapp.network.JSONRoot;
 
 
 public class DetailLocationFragment extends Fragment implements OnTaskCompleted {
@@ -32,6 +30,8 @@ public class DetailLocationFragment extends Fragment implements OnTaskCompleted 
     private TextView meanTemp;
     private TextView minTemp;
     private TextView maxTemp;
+
+    private ImageView weatherImage;
 
     public static DetailLocationFragment newInstance(UUID locationId) {
         Bundle args = new Bundle();
@@ -59,6 +59,9 @@ public class DetailLocationFragment extends Fragment implements OnTaskCompleted 
         minTemp = v.findViewById(R.id.minTemp);
         maxTemp = v.findViewById(R.id.maxTemp);
 
+        weatherImage = v.findViewById(R.id.weather_image);
+
+
         // request to get the values
         FetchItemsTask t = new FetchItemsTask(this);
         t.execute(mLocation);
@@ -67,11 +70,36 @@ public class DetailLocationFragment extends Fragment implements OnTaskCompleted 
     }
 
     @Override
-    public void onTaskCompleted(Weather item) {
+    public void onTaskCompleted(JSONRoot item) {
         NumberFormat formatter = new DecimalFormat("#0.00");
-        meanTemp.setText(formatter.format(item.getMain().getTemp()-273.15) + " °C");
-        minTemp.setText(formatter.format(item.getMain().getTemp_min()-273.15) + " °C");
-        maxTemp.setText(formatter.format(item.getMain().getTemp_max()-273.15) + " °C");
+        switch (item.getWeather().get(0).getMain().toLowerCase()) {
+            case "clouds":
+                weatherImage.setImageResource(R.drawable.cloudy);
+                break;
+            case "drizzle":
+                Log.d("[WFETCH]","It's drizzle");
+                break;
+            case "rain":
+                weatherImage.setImageResource(R.drawable.rainy);
+                break;
+            case "snow":
+                weatherImage.setImageResource(R.drawable.snowy);
+                break;
+            case "tornado":
+                Log.d("[WFETCH]","It's a tornado!");
+                break;
+            case "clear":
+                weatherImage.setImageResource(R.drawable.sunny);
+                break;
+            case "thunderstorm":
+                Log.d("[WFETCH]","It's a thunderstorm!");
+                break;
+            default:
+                Log.d("[WFETCH]","[Default]" + item.getWeather().get(0).getMain());
+        }
+        meanTemp.setText(formatter.format(item.getMain().getTemp() - 273.15) + " °C");
+        minTemp.setText(formatter.format(item.getMain().getTemp_min() - 273.15) + " °C");
+        maxTemp.setText(formatter.format(item.getMain().getTemp_max() - 273.15) + " °C");
 
     }
 }

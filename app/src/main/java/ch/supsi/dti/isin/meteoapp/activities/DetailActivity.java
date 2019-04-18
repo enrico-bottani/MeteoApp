@@ -7,7 +7,7 @@ import android.support.v4.app.Fragment;
 import java.util.UUID;
 
 import ch.supsi.dti.isin.meteoapp.fragments.DetailLocationFragment;
-import ch.supsi.dti.isin.meteoapp.network.Weather;
+import ch.supsi.dti.isin.meteoapp.network.JSONRoot;
 
 public class DetailActivity extends SingleFragmentActivity {
     private static final String EXTRA_LOCATION_ID = "ch.supsi.dti.isin.meteoapp.location_id";
@@ -25,7 +25,7 @@ public class DetailActivity extends SingleFragmentActivity {
     }
 
     @Override
-    public void onTaskCompleted(Weather item) {
+    public void onTaskCompleted(JSONRoot item) {
 
     }
 }

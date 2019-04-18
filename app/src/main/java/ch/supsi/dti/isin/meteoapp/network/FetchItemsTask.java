@@ -6,7 +6,7 @@ import android.os.AsyncTask;
 import ch.supsi.dti.isin.meteoapp.model.Datafetcher;
 import ch.supsi.dti.isin.meteoapp.model.Location;
 
-public class FetchItemsTask extends AsyncTask<Location,Void, Weather> {
+public class FetchItemsTask extends AsyncTask<Location,Void, JSONRoot> {
     private OnTaskCompleted listener;
 
     public FetchItemsTask(OnTaskCompleted listener) {
@@ -14,12 +14,12 @@ public class FetchItemsTask extends AsyncTask<Location,Void, Weather> {
     }
 
     @Override
-    protected Weather doInBackground(Location... locationName) {
+    protected JSONRoot doInBackground(Location... locationName) {
 
         return new Datafetcher().fetchItem(locationName[0]);
     }
     @Override
-    protected void onPostExecute(Weather item) {
+    protected void onPostExecute(JSONRoot item) {
         listener.onTaskCompleted(item);
     }
 }
