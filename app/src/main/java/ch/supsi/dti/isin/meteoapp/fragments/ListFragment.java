@@ -162,6 +162,7 @@ public class ListFragment extends Fragment {
         public void onBindViewHolder(LocationHolder holder, int position) {
             Location location = mLocations.get(position);
             holder.bind(location);
+            holder.bind(location);
         }
 
         @Override
