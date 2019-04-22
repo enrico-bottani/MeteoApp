@@ -64,7 +64,7 @@ public class BackgroundTempMonitor extends IntentService {
         }
 
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this, "default")
-                .setContentTitle(isCold ? "Brr... " : "Muy caliente!")
+                .setContentTitle(isCold ? "Brr... " : "Caldo!")
                 .setContentText("Warning! Temperature " + (isCold ? "below " : "over ") + degrees+" degrees")
                 .setSmallIcon(isCold ? R.drawable.ic_cold : R.drawable.hot_sun)
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT);
